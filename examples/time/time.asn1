@@ -1,0 +1,11 @@
+Time DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+Tempo ::= SEQUENCE {
+ data UTCTime,
+ nada SEQUENCE OF UTCTime,
+ x NULL,
+ bs BIT STRING (SIZE(16)),
+ oid OBJECT IDENTIFIER
+}
+
+END

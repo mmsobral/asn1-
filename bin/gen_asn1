@@ -1,0 +1,70 @@
+#!/usr/bin/python
+
+from Asn1Parser import *
+import getopt,sys,os
+
+def ajuda():
+  print 'Uso: %s [-n name][-d dir] rules_file1 [rules_file2 ...] | -h' % sys.argv[0]
+  print '-n:\tnomeia arquivos de codigo e classe usando "name" (default="default")'
+  print '-d:\tgrava arquivos de codigo no subdiretorio "dir"'
+  print '-h:\tmostra esta ajuda'
+  print 'rules_file:\tarquivo com a especificacao ASN.1\n'
+  sys.exit(0)
+
+opcoes,extra = getopt.getopt(sys.argv[1:], 'd:n:h')
+
+destdir = '.'
+rules = []
+name = 'default'
+
+try:
+  rules = extra
+except:
+  pass
+
+for op,valor in opcoes:
+  if op == '-d':
+    destdir = valor
+  elif op == '-n':
+    name = valor
+  else:
+    ajuda()
+
+if not rules: ajuda()
+
+for arq in rules:
+  try:
+    os.stat(arq)
+  except:
+    print 'Erro: arquivo de regras "%s" nao existe ou nao pode ser acessado !' % arq
+    sys.exit(0)
+
+try:
+  os.stat(destdir)
+except:
+  try:
+    os.makedirs(destdir, 0755)
+  except:
+    print 'Erro: subdiretorio "%s" nao existe e nao pode ser criado !' % destdir
+    sys.exit(0)
+
+
+p = ASN1Parser(rules)
+p.build()
+try:
+  p.parse()
+  builder = p.get_builder()
+except ParseError, e:
+  print 'Erro: %s' % e
+  print 'Linha:', e.line
+  sys.exit(0)
+
+res = builder.build(destdir)
+
+for p1 in res:
+  path = os.path.dirname(sys.argv[0])
+  path = os.path.abspath('%s/..' % path)
+  print '\nCriou arquivo de codigo "%s"' % p1
+
+sys.exit(0)
+

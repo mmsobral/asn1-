@@ -1,0 +1,20 @@
+Ativo DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+
+Algo ::= SEQUENCE {
+  num INTEGER,
+  dado PrintableString (SIZE(1..8))
+}
+
+Ativo ::= SEQUENCE {
+  id CHOICE {
+  nome PrintableString(SIZE(1..16)),
+  codigo INTEGER
+  },
+  desc Algo,
+  valor INTEGER,
+  data NumericString(SIZE(8)),
+  horario NumericString (SIZE(6))
+}
+ 
+END

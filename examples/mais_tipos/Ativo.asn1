@@ -1,0 +1,28 @@
+Ativo DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+
+IntList ::= SEQUENCE OF INTEGER
+
+BoolList ::= SEQUENCE OF BOOLEAN
+
+Tipo1 ::= SEQUENCE {
+  id IntList,
+  nome PrintableString
+}
+
+Tipo2 ::= SEQUENCE {
+  id BoolList,
+  nome PrintableString
+}
+
+Ativo ::= SEQUENCE {
+  id CHOICE {
+    t1 Tipo1,
+    t2 Tipo2
+  },
+  valor INTEGER,
+  data NumericString(SIZE(8)),
+  horario NumericString (SIZE(6))
+}
+ 
+END

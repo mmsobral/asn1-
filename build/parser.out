@@ -1,0 +1,1769 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> ID DEFINITIONS EQUALS BEGIN structs END
+Rule 2     statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+Rule 3     statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+Rule 4     arcs -> arc arcs
+Rule 5     arcs -> arc
+Rule 6     arc -> ID
+Rule 7     arc -> ID LPAR NUMBER RPAR
+Rule 8     arc -> NUMBER
+Rule 9     structs -> struct
+Rule 10    structs -> struct structs
+Rule 11    structs -> COMMENT
+Rule 12    idlist -> ID
+Rule 13    idlist -> ID VIRG idlist
+Rule 14    struct -> ID EQUALS sequence
+Rule 15    struct -> ID EQUALS enumerated
+Rule 16    struct -> ID EQUALS type
+Rule 17    struct -> ID EQUALS type extra
+Rule 18    struct -> IMPORTS imports HCOMMA
+Rule 19    struct -> EXPORTS idlist HCOMMA
+Rule 20    struct -> ID EQUALS set
+Rule 21    imports -> import imports
+Rule 22    imports -> import
+Rule 23    import -> idlist FROM ID
+Rule 24    sequence -> SEQUENCE LBRACE fields RBRACE
+Rule 25    set -> SET LBRACE fields RBRACE
+Rule 26    enumerated -> ENUMERATED LBRACE emembers RBRACE
+Rule 27    emembers -> emember VIRG emembers
+Rule 28    emembers -> emember
+Rule 29    emember -> ID
+Rule 30    emember -> ID LPAR NUMBER RPAR
+Rule 31    fields -> member VIRG fields
+Rule 32    fields -> member
+Rule 33    member -> ID type
+Rule 34    member -> ID type extra
+Rule 35    member -> ID sequence
+Rule 36    member -> ID sequence extra
+Rule 37    member -> ID set
+Rule 38    member -> ID set extra
+Rule 39    member -> ID enumerated
+Rule 40    member -> ID enumerated extra
+Rule 41    extra -> size
+Rule 42    extra -> size OPTIONAL
+Rule 43    extra -> OPTIONAL
+Rule 44    size -> LPAR SIZE LPAR NUMBER RPAR RPAR
+Rule 45    size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+Rule 46    type -> TSTRING
+Rule 47    type -> OCTET STRING
+Rule 48    type -> BIT STRING
+Rule 49    type -> INTEGER
+Rule 50    type -> INTEGER range
+Rule 51    range -> LPAR NUMBER DOT DOT NUMBER RPAR
+Rule 52    range -> LPAR MIN DOT DOT NUMBER RPAR
+Rule 53    range -> LPAR NUMBER DOT DOT MAX RPAR
+Rule 54    range -> LPAR MIN DOT DOT MAX RPAR
+Rule 55    type -> BOOLEAN
+Rule 56    type -> SET OF type
+Rule 57    type -> SEQUENCE OF type
+Rule 58    type -> OBJECT IDENTIFIER
+Rule 59    type -> ROID
+Rule 60    type -> CHOICE LBRACE fields RBRACE
+Rule 61    type -> ID
+Rule 62    type -> NULL
+Rule 63    type -> UTCTIME
+
+Terminals, with rules where they appear
+
+AUTOMATIC            : 2 3
+BEGIN                : 1 2 3
+BIT                  : 48
+BOOLEAN              : 55
+CHOICE               : 60
+COMMENT              : 11
+DEFINITIONS          : 1 2 3
+DOT                  : 45 45 51 51 52 52 53 53 54 54
+END                  : 1 2 3
+ENUMERATED           : 26
+EQUALS               : 1 2 3 14 15 16 17 20
+EXPORTS              : 19
+FROM                 : 23
+HCOMMA               : 18 19
+ID                   : 1 2 3 6 7 12 13 14 15 16 17 20 23 29 30 33 34 35 36 37 38 39 40 61
+IDENTIFIER           : 58
+IMPORTS              : 18
+INTEGER              : 49 50
+LBRACE               : 3 24 25 26 60
+LPAR                 : 7 30 44 44 45 45 51 52 53 54
+MAX                  : 53 54
+MIN                  : 52 54
+NULL                 : 62
+NUMBER               : 7 8 30 44 45 45 51 51 52 53
+OBJECT               : 58
+OCTET                : 47
+OF                   : 56 57
+OPTIONAL             : 42 43
+RBRACE               : 3 24 25 26 60
+ROID                 : 59
+RPAR                 : 7 30 44 44 45 45 51 52 53 54
+SEQUENCE             : 24 57
+SET                  : 25 56
+SIZE                 : 44 45
+STRING               : 47 48
+TAGS                 : 2 3
+TSTRING              : 46
+UTCTIME              : 63
+VIRG                 : 13 27 31
+error                : 
+
+Nonterminals, with rules where they appear
+
+arc                  : 4 5
+arcs                 : 3 4
+emember              : 27 28
+emembers             : 26 27
+enumerated           : 15 39 40
+extra                : 17 34 36 38 40
+fields               : 24 25 31 60
+idlist               : 13 19 23
+import               : 21 22
+imports              : 18 21
+member               : 31 32
+range                : 50
+sequence             : 14 35 36
+set                  : 20 37 38
+size                 : 41 42
+statement            : 0
+struct               : 9 10
+structs              : 1 2 3 10
+type                 : 16 17 33 34 56 57
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . ID DEFINITIONS EQUALS BEGIN structs END
+    (2) statement -> . ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+    (3) statement -> . ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    ID              shift and go to state 1
+
+    statement                      shift and go to state 2
+
+state 1
+
+    (1) statement -> ID . DEFINITIONS EQUALS BEGIN structs END
+    (2) statement -> ID . DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+    (3) statement -> ID . LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    DEFINITIONS     shift and go to state 4
+    LBRACE          shift and go to state 3
+
+
+state 2
+
+    (0) S' -> statement .
+
+
+
+state 3
+
+    (3) statement -> ID LBRACE . arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+    (4) arcs -> . arc arcs
+    (5) arcs -> . arc
+    (6) arc -> . ID
+    (7) arc -> . ID LPAR NUMBER RPAR
+    (8) arc -> . NUMBER
+
+    ID              shift and go to state 8
+    NUMBER          shift and go to state 6
+
+    arc                            shift and go to state 7
+    arcs                           shift and go to state 5
+
+state 4
+
+    (1) statement -> ID DEFINITIONS . EQUALS BEGIN structs END
+    (2) statement -> ID DEFINITIONS . AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    EQUALS          shift and go to state 9
+    AUTOMATIC       shift and go to state 10
+
+
+state 5
+
+    (3) statement -> ID LBRACE arcs . RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    RBRACE          shift and go to state 11
+
+
+state 6
+
+    (8) arc -> NUMBER .
+
+    ID              reduce using rule 8 (arc -> NUMBER .)
+    NUMBER          reduce using rule 8 (arc -> NUMBER .)
+    RBRACE          reduce using rule 8 (arc -> NUMBER .)
+
+
+state 7
+
+    (4) arcs -> arc . arcs
+    (5) arcs -> arc .
+    (4) arcs -> . arc arcs
+    (5) arcs -> . arc
+    (6) arc -> . ID
+    (7) arc -> . ID LPAR NUMBER RPAR
+    (8) arc -> . NUMBER
+
+    RBRACE          reduce using rule 5 (arcs -> arc .)
+    ID              shift and go to state 8
+    NUMBER          shift and go to state 6
+
+    arc                            shift and go to state 7
+    arcs                           shift and go to state 12
+
+state 8
+
+    (6) arc -> ID .
+    (7) arc -> ID . LPAR NUMBER RPAR
+
+    ID              reduce using rule 6 (arc -> ID .)
+    NUMBER          reduce using rule 6 (arc -> ID .)
+    RBRACE          reduce using rule 6 (arc -> ID .)
+    LPAR            shift and go to state 13
+
+
+state 9
+
+    (1) statement -> ID DEFINITIONS EQUALS . BEGIN structs END
+
+    BEGIN           shift and go to state 14
+
+
+state 10
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC . TAGS EQUALS BEGIN structs END
+
+    TAGS            shift and go to state 15
+
+
+state 11
+
+    (3) statement -> ID LBRACE arcs RBRACE . DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    DEFINITIONS     shift and go to state 16
+
+
+state 12
+
+    (4) arcs -> arc arcs .
+
+    RBRACE          reduce using rule 4 (arcs -> arc arcs .)
+
+
+state 13
+
+    (7) arc -> ID LPAR . NUMBER RPAR
+
+    NUMBER          shift and go to state 17
+
+
+state 14
+
+    (1) statement -> ID DEFINITIONS EQUALS BEGIN . structs END
+    (9) structs -> . struct
+    (10) structs -> . struct structs
+    (11) structs -> . COMMENT
+    (14) struct -> . ID EQUALS sequence
+    (15) struct -> . ID EQUALS enumerated
+    (16) struct -> . ID EQUALS type
+    (17) struct -> . ID EQUALS type extra
+    (18) struct -> . IMPORTS imports HCOMMA
+    (19) struct -> . EXPORTS idlist HCOMMA
+    (20) struct -> . ID EQUALS set
+
+    COMMENT         shift and go to state 18
+    ID              shift and go to state 23
+    IMPORTS         shift and go to state 20
+    EXPORTS         shift and go to state 22
+
+    struct                         shift and go to state 19
+    structs                        shift and go to state 21
+
+state 15
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC TAGS . EQUALS BEGIN structs END
+
+    EQUALS          shift and go to state 24
+
+
+state 16
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS . AUTOMATIC TAGS EQUALS BEGIN structs END
+
+    AUTOMATIC       shift and go to state 25
+
+
+state 17
+
+    (7) arc -> ID LPAR NUMBER . RPAR
+
+    RPAR            shift and go to state 26
+
+
+state 18
+
+    (11) structs -> COMMENT .
+
+    END             reduce using rule 11 (structs -> COMMENT .)
+
+
+state 19
+
+    (9) structs -> struct .
+    (10) structs -> struct . structs
+    (9) structs -> . struct
+    (10) structs -> . struct structs
+    (11) structs -> . COMMENT
+    (14) struct -> . ID EQUALS sequence
+    (15) struct -> . ID EQUALS enumerated
+    (16) struct -> . ID EQUALS type
+    (17) struct -> . ID EQUALS type extra
+    (18) struct -> . IMPORTS imports HCOMMA
+    (19) struct -> . EXPORTS idlist HCOMMA
+    (20) struct -> . ID EQUALS set
+
+    END             reduce using rule 9 (structs -> struct .)
+    COMMENT         shift and go to state 18
+    ID              shift and go to state 23
+    IMPORTS         shift and go to state 20
+    EXPORTS         shift and go to state 22
+
+    struct                         shift and go to state 19
+    structs                        shift and go to state 27
+
+state 20
+
+    (18) struct -> IMPORTS . imports HCOMMA
+    (21) imports -> . import imports
+    (22) imports -> . import
+    (23) import -> . idlist FROM ID
+    (12) idlist -> . ID
+    (13) idlist -> . ID VIRG idlist
+
+    ID              shift and go to state 31
+
+    imports                        shift and go to state 29
+    idlist                         shift and go to state 28
+    import                         shift and go to state 30
+
+state 21
+
+    (1) statement -> ID DEFINITIONS EQUALS BEGIN structs . END
+
+    END             shift and go to state 32
+
+
+state 22
+
+    (19) struct -> EXPORTS . idlist HCOMMA
+    (12) idlist -> . ID
+    (13) idlist -> . ID VIRG idlist
+
+    ID              shift and go to state 31
+
+    idlist                         shift and go to state 33
+
+state 23
+
+    (14) struct -> ID . EQUALS sequence
+    (15) struct -> ID . EQUALS enumerated
+    (16) struct -> ID . EQUALS type
+    (17) struct -> ID . EQUALS type extra
+    (20) struct -> ID . EQUALS set
+
+    EQUALS          shift and go to state 34
+
+
+state 24
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS . BEGIN structs END
+
+    BEGIN           shift and go to state 35
+
+
+state 25
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC . TAGS EQUALS BEGIN structs END
+
+    TAGS            shift and go to state 36
+
+
+state 26
+
+    (7) arc -> ID LPAR NUMBER RPAR .
+
+    ID              reduce using rule 7 (arc -> ID LPAR NUMBER RPAR .)
+    NUMBER          reduce using rule 7 (arc -> ID LPAR NUMBER RPAR .)
+    RBRACE          reduce using rule 7 (arc -> ID LPAR NUMBER RPAR .)
+
+
+state 27
+
+    (10) structs -> struct structs .
+
+    END             reduce using rule 10 (structs -> struct structs .)
+
+
+state 28
+
+    (23) import -> idlist . FROM ID
+
+    FROM            shift and go to state 37
+
+
+state 29
+
+    (18) struct -> IMPORTS imports . HCOMMA
+
+    HCOMMA          shift and go to state 38
+
+
+state 30
+
+    (21) imports -> import . imports
+    (22) imports -> import .
+    (21) imports -> . import imports
+    (22) imports -> . import
+    (23) import -> . idlist FROM ID
+    (12) idlist -> . ID
+    (13) idlist -> . ID VIRG idlist
+
+    HCOMMA          reduce using rule 22 (imports -> import .)
+    ID              shift and go to state 31
+
+    import                         shift and go to state 30
+    idlist                         shift and go to state 28
+    imports                        shift and go to state 39
+
+state 31
+
+    (12) idlist -> ID .
+    (13) idlist -> ID . VIRG idlist
+
+    FROM            reduce using rule 12 (idlist -> ID .)
+    HCOMMA          reduce using rule 12 (idlist -> ID .)
+    VIRG            shift and go to state 40
+
+
+state 32
+
+    (1) statement -> ID DEFINITIONS EQUALS BEGIN structs END .
+
+    $end            reduce using rule 1 (statement -> ID DEFINITIONS EQUALS BEGIN structs END .)
+
+
+state 33
+
+    (19) struct -> EXPORTS idlist . HCOMMA
+
+    HCOMMA          shift and go to state 41
+
+
+state 34
+
+    (14) struct -> ID EQUALS . sequence
+    (15) struct -> ID EQUALS . enumerated
+    (16) struct -> ID EQUALS . type
+    (17) struct -> ID EQUALS . type extra
+    (20) struct -> ID EQUALS . set
+    (24) sequence -> . SEQUENCE LBRACE fields RBRACE
+    (26) enumerated -> . ENUMERATED LBRACE emembers RBRACE
+    (46) type -> . TSTRING
+    (47) type -> . OCTET STRING
+    (48) type -> . BIT STRING
+    (49) type -> . INTEGER
+    (50) type -> . INTEGER range
+    (55) type -> . BOOLEAN
+    (56) type -> . SET OF type
+    (57) type -> . SEQUENCE OF type
+    (58) type -> . OBJECT IDENTIFIER
+    (59) type -> . ROID
+    (60) type -> . CHOICE LBRACE fields RBRACE
+    (61) type -> . ID
+    (62) type -> . NULL
+    (63) type -> . UTCTIME
+    (25) set -> . SET LBRACE fields RBRACE
+
+    SEQUENCE        shift and go to state 54
+    ENUMERATED      shift and go to state 59
+    TSTRING         shift and go to state 45
+    OCTET           shift and go to state 55
+    BIT             shift and go to state 52
+    INTEGER         shift and go to state 51
+    BOOLEAN         shift and go to state 58
+    SET             shift and go to state 47
+    OBJECT          shift and go to state 43
+    ROID            shift and go to state 48
+    CHOICE          shift and go to state 56
+    ID              shift and go to state 57
+    NULL            shift and go to state 46
+    UTCTIME         shift and go to state 44
+
+    set                            shift and go to state 42
+    sequence                       shift and go to state 49
+    enumerated                     shift and go to state 50
+    type                           shift and go to state 53
+
+state 35
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN . structs END
+    (9) structs -> . struct
+    (10) structs -> . struct structs
+    (11) structs -> . COMMENT
+    (14) struct -> . ID EQUALS sequence
+    (15) struct -> . ID EQUALS enumerated
+    (16) struct -> . ID EQUALS type
+    (17) struct -> . ID EQUALS type extra
+    (18) struct -> . IMPORTS imports HCOMMA
+    (19) struct -> . EXPORTS idlist HCOMMA
+    (20) struct -> . ID EQUALS set
+
+    COMMENT         shift and go to state 18
+    ID              shift and go to state 23
+    IMPORTS         shift and go to state 20
+    EXPORTS         shift and go to state 22
+
+    struct                         shift and go to state 19
+    structs                        shift and go to state 60
+
+state 36
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS . EQUALS BEGIN structs END
+
+    EQUALS          shift and go to state 61
+
+
+state 37
+
+    (23) import -> idlist FROM . ID
+
+    ID              shift and go to state 62
+
+
+state 38
+
+    (18) struct -> IMPORTS imports HCOMMA .
+
+    COMMENT         reduce using rule 18 (struct -> IMPORTS imports HCOMMA .)
+    ID              reduce using rule 18 (struct -> IMPORTS imports HCOMMA .)
+    IMPORTS         reduce using rule 18 (struct -> IMPORTS imports HCOMMA .)
+    EXPORTS         reduce using rule 18 (struct -> IMPORTS imports HCOMMA .)
+    END             reduce using rule 18 (struct -> IMPORTS imports HCOMMA .)
+
+
+state 39
+
+    (21) imports -> import imports .
+
+    HCOMMA          reduce using rule 21 (imports -> import imports .)
+
+
+state 40
+
+    (13) idlist -> ID VIRG . idlist
+    (12) idlist -> . ID
+    (13) idlist -> . ID VIRG idlist
+
+    ID              shift and go to state 31
+
+    idlist                         shift and go to state 63
+
+state 41
+
+    (19) struct -> EXPORTS idlist HCOMMA .
+
+    COMMENT         reduce using rule 19 (struct -> EXPORTS idlist HCOMMA .)
+    ID              reduce using rule 19 (struct -> EXPORTS idlist HCOMMA .)
+    IMPORTS         reduce using rule 19 (struct -> EXPORTS idlist HCOMMA .)
+    EXPORTS         reduce using rule 19 (struct -> EXPORTS idlist HCOMMA .)
+    END             reduce using rule 19 (struct -> EXPORTS idlist HCOMMA .)
+
+
+state 42
+
+    (20) struct -> ID EQUALS set .
+
+    COMMENT         reduce using rule 20 (struct -> ID EQUALS set .)
+    ID              reduce using rule 20 (struct -> ID EQUALS set .)
+    IMPORTS         reduce using rule 20 (struct -> ID EQUALS set .)
+    EXPORTS         reduce using rule 20 (struct -> ID EQUALS set .)
+    END             reduce using rule 20 (struct -> ID EQUALS set .)
+
+
+state 43
+
+    (58) type -> OBJECT . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 64
+
+
+state 44
+
+    (63) type -> UTCTIME .
+
+    OPTIONAL        reduce using rule 63 (type -> UTCTIME .)
+    LPAR            reduce using rule 63 (type -> UTCTIME .)
+    COMMENT         reduce using rule 63 (type -> UTCTIME .)
+    ID              reduce using rule 63 (type -> UTCTIME .)
+    IMPORTS         reduce using rule 63 (type -> UTCTIME .)
+    EXPORTS         reduce using rule 63 (type -> UTCTIME .)
+    END             reduce using rule 63 (type -> UTCTIME .)
+    VIRG            reduce using rule 63 (type -> UTCTIME .)
+    RBRACE          reduce using rule 63 (type -> UTCTIME .)
+
+
+state 45
+
+    (46) type -> TSTRING .
+
+    OPTIONAL        reduce using rule 46 (type -> TSTRING .)
+    LPAR            reduce using rule 46 (type -> TSTRING .)
+    COMMENT         reduce using rule 46 (type -> TSTRING .)
+    ID              reduce using rule 46 (type -> TSTRING .)
+    IMPORTS         reduce using rule 46 (type -> TSTRING .)
+    EXPORTS         reduce using rule 46 (type -> TSTRING .)
+    END             reduce using rule 46 (type -> TSTRING .)
+    VIRG            reduce using rule 46 (type -> TSTRING .)
+    RBRACE          reduce using rule 46 (type -> TSTRING .)
+
+
+state 46
+
+    (62) type -> NULL .
+
+    OPTIONAL        reduce using rule 62 (type -> NULL .)
+    LPAR            reduce using rule 62 (type -> NULL .)
+    COMMENT         reduce using rule 62 (type -> NULL .)
+    ID              reduce using rule 62 (type -> NULL .)
+    IMPORTS         reduce using rule 62 (type -> NULL .)
+    EXPORTS         reduce using rule 62 (type -> NULL .)
+    END             reduce using rule 62 (type -> NULL .)
+    VIRG            reduce using rule 62 (type -> NULL .)
+    RBRACE          reduce using rule 62 (type -> NULL .)
+
+
+state 47
+
+    (56) type -> SET . OF type
+    (25) set -> SET . LBRACE fields RBRACE
+
+    OF              shift and go to state 65
+    LBRACE          shift and go to state 66
+
+
+state 48
+
+    (59) type -> ROID .
+
+    OPTIONAL        reduce using rule 59 (type -> ROID .)
+    LPAR            reduce using rule 59 (type -> ROID .)
+    COMMENT         reduce using rule 59 (type -> ROID .)
+    ID              reduce using rule 59 (type -> ROID .)
+    IMPORTS         reduce using rule 59 (type -> ROID .)
+    EXPORTS         reduce using rule 59 (type -> ROID .)
+    END             reduce using rule 59 (type -> ROID .)
+    VIRG            reduce using rule 59 (type -> ROID .)
+    RBRACE          reduce using rule 59 (type -> ROID .)
+
+
+state 49
+
+    (14) struct -> ID EQUALS sequence .
+
+    COMMENT         reduce using rule 14 (struct -> ID EQUALS sequence .)
+    ID              reduce using rule 14 (struct -> ID EQUALS sequence .)
+    IMPORTS         reduce using rule 14 (struct -> ID EQUALS sequence .)
+    EXPORTS         reduce using rule 14 (struct -> ID EQUALS sequence .)
+    END             reduce using rule 14 (struct -> ID EQUALS sequence .)
+
+
+state 50
+
+    (15) struct -> ID EQUALS enumerated .
+
+    COMMENT         reduce using rule 15 (struct -> ID EQUALS enumerated .)
+    ID              reduce using rule 15 (struct -> ID EQUALS enumerated .)
+    IMPORTS         reduce using rule 15 (struct -> ID EQUALS enumerated .)
+    EXPORTS         reduce using rule 15 (struct -> ID EQUALS enumerated .)
+    END             reduce using rule 15 (struct -> ID EQUALS enumerated .)
+
+
+state 51
+
+    (49) type -> INTEGER .
+    (50) type -> INTEGER . range
+    (51) range -> . LPAR NUMBER DOT DOT NUMBER RPAR
+    (52) range -> . LPAR MIN DOT DOT NUMBER RPAR
+    (53) range -> . LPAR NUMBER DOT DOT MAX RPAR
+    (54) range -> . LPAR MIN DOT DOT MAX RPAR
+
+  ! shift/reduce conflict for LPAR resolved as shift
+    OPTIONAL        reduce using rule 49 (type -> INTEGER .)
+    COMMENT         reduce using rule 49 (type -> INTEGER .)
+    ID              reduce using rule 49 (type -> INTEGER .)
+    IMPORTS         reduce using rule 49 (type -> INTEGER .)
+    EXPORTS         reduce using rule 49 (type -> INTEGER .)
+    END             reduce using rule 49 (type -> INTEGER .)
+    VIRG            reduce using rule 49 (type -> INTEGER .)
+    RBRACE          reduce using rule 49 (type -> INTEGER .)
+    LPAR            shift and go to state 67
+
+  ! LPAR            [ reduce using rule 49 (type -> INTEGER .) ]
+
+    range                          shift and go to state 68
+
+state 52
+
+    (48) type -> BIT . STRING
+
+    STRING          shift and go to state 69
+
+
+state 53
+
+    (16) struct -> ID EQUALS type .
+    (17) struct -> ID EQUALS type . extra
+    (41) extra -> . size
+    (42) extra -> . size OPTIONAL
+    (43) extra -> . OPTIONAL
+    (44) size -> . LPAR SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> . LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    COMMENT         reduce using rule 16 (struct -> ID EQUALS type .)
+    ID              reduce using rule 16 (struct -> ID EQUALS type .)
+    IMPORTS         reduce using rule 16 (struct -> ID EQUALS type .)
+    EXPORTS         reduce using rule 16 (struct -> ID EQUALS type .)
+    END             reduce using rule 16 (struct -> ID EQUALS type .)
+    OPTIONAL        shift and go to state 72
+    LPAR            shift and go to state 70
+
+    size                           shift and go to state 73
+    extra                          shift and go to state 71
+
+state 54
+
+    (24) sequence -> SEQUENCE . LBRACE fields RBRACE
+    (57) type -> SEQUENCE . OF type
+
+    LBRACE          shift and go to state 74
+    OF              shift and go to state 75
+
+
+state 55
+
+    (47) type -> OCTET . STRING
+
+    STRING          shift and go to state 76
+
+
+state 56
+
+    (60) type -> CHOICE . LBRACE fields RBRACE
+
+    LBRACE          shift and go to state 77
+
+
+state 57
+
+    (61) type -> ID .
+
+    OPTIONAL        reduce using rule 61 (type -> ID .)
+    LPAR            reduce using rule 61 (type -> ID .)
+    COMMENT         reduce using rule 61 (type -> ID .)
+    ID              reduce using rule 61 (type -> ID .)
+    IMPORTS         reduce using rule 61 (type -> ID .)
+    EXPORTS         reduce using rule 61 (type -> ID .)
+    END             reduce using rule 61 (type -> ID .)
+    VIRG            reduce using rule 61 (type -> ID .)
+    RBRACE          reduce using rule 61 (type -> ID .)
+
+
+state 58
+
+    (55) type -> BOOLEAN .
+
+    OPTIONAL        reduce using rule 55 (type -> BOOLEAN .)
+    LPAR            reduce using rule 55 (type -> BOOLEAN .)
+    COMMENT         reduce using rule 55 (type -> BOOLEAN .)
+    ID              reduce using rule 55 (type -> BOOLEAN .)
+    IMPORTS         reduce using rule 55 (type -> BOOLEAN .)
+    EXPORTS         reduce using rule 55 (type -> BOOLEAN .)
+    END             reduce using rule 55 (type -> BOOLEAN .)
+    VIRG            reduce using rule 55 (type -> BOOLEAN .)
+    RBRACE          reduce using rule 55 (type -> BOOLEAN .)
+
+
+state 59
+
+    (26) enumerated -> ENUMERATED . LBRACE emembers RBRACE
+
+    LBRACE          shift and go to state 78
+
+
+state 60
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs . END
+
+    END             shift and go to state 79
+
+
+state 61
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS . BEGIN structs END
+
+    BEGIN           shift and go to state 80
+
+
+state 62
+
+    (23) import -> idlist FROM ID .
+
+    ID              reduce using rule 23 (import -> idlist FROM ID .)
+    HCOMMA          reduce using rule 23 (import -> idlist FROM ID .)
+
+
+state 63
+
+    (13) idlist -> ID VIRG idlist .
+
+    FROM            reduce using rule 13 (idlist -> ID VIRG idlist .)
+    HCOMMA          reduce using rule 13 (idlist -> ID VIRG idlist .)
+
+
+state 64
+
+    (58) type -> OBJECT IDENTIFIER .
+
+    OPTIONAL        reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    LPAR            reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    COMMENT         reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    ID              reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    IMPORTS         reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    EXPORTS         reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    END             reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    VIRG            reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+    RBRACE          reduce using rule 58 (type -> OBJECT IDENTIFIER .)
+
+
+state 65
+
+    (56) type -> SET OF . type
+    (46) type -> . TSTRING
+    (47) type -> . OCTET STRING
+    (48) type -> . BIT STRING
+    (49) type -> . INTEGER
+    (50) type -> . INTEGER range
+    (55) type -> . BOOLEAN
+    (56) type -> . SET OF type
+    (57) type -> . SEQUENCE OF type
+    (58) type -> . OBJECT IDENTIFIER
+    (59) type -> . ROID
+    (60) type -> . CHOICE LBRACE fields RBRACE
+    (61) type -> . ID
+    (62) type -> . NULL
+    (63) type -> . UTCTIME
+
+    TSTRING         shift and go to state 45
+    OCTET           shift and go to state 55
+    BIT             shift and go to state 52
+    INTEGER         shift and go to state 51
+    BOOLEAN         shift and go to state 58
+    SET             shift and go to state 81
+    SEQUENCE        shift and go to state 82
+    OBJECT          shift and go to state 43
+    ROID            shift and go to state 48
+    CHOICE          shift and go to state 56
+    ID              shift and go to state 57
+    NULL            shift and go to state 46
+    UTCTIME         shift and go to state 44
+
+    type                           shift and go to state 83
+
+state 66
+
+    (25) set -> SET LBRACE . fields RBRACE
+    (31) fields -> . member VIRG fields
+    (32) fields -> . member
+    (33) member -> . ID type
+    (34) member -> . ID type extra
+    (35) member -> . ID sequence
+    (36) member -> . ID sequence extra
+    (37) member -> . ID set
+    (38) member -> . ID set extra
+    (39) member -> . ID enumerated
+    (40) member -> . ID enumerated extra
+
+    ID              shift and go to state 86
+
+    fields                         shift and go to state 84
+    member                         shift and go to state 85
+
+state 67
+
+    (51) range -> LPAR . NUMBER DOT DOT NUMBER RPAR
+    (52) range -> LPAR . MIN DOT DOT NUMBER RPAR
+    (53) range -> LPAR . NUMBER DOT DOT MAX RPAR
+    (54) range -> LPAR . MIN DOT DOT MAX RPAR
+
+    NUMBER          shift and go to state 88
+    MIN             shift and go to state 87
+
+
+state 68
+
+    (50) type -> INTEGER range .
+
+    OPTIONAL        reduce using rule 50 (type -> INTEGER range .)
+    LPAR            reduce using rule 50 (type -> INTEGER range .)
+    COMMENT         reduce using rule 50 (type -> INTEGER range .)
+    ID              reduce using rule 50 (type -> INTEGER range .)
+    IMPORTS         reduce using rule 50 (type -> INTEGER range .)
+    EXPORTS         reduce using rule 50 (type -> INTEGER range .)
+    END             reduce using rule 50 (type -> INTEGER range .)
+    VIRG            reduce using rule 50 (type -> INTEGER range .)
+    RBRACE          reduce using rule 50 (type -> INTEGER range .)
+
+
+state 69
+
+    (48) type -> BIT STRING .
+
+    OPTIONAL        reduce using rule 48 (type -> BIT STRING .)
+    LPAR            reduce using rule 48 (type -> BIT STRING .)
+    COMMENT         reduce using rule 48 (type -> BIT STRING .)
+    ID              reduce using rule 48 (type -> BIT STRING .)
+    IMPORTS         reduce using rule 48 (type -> BIT STRING .)
+    EXPORTS         reduce using rule 48 (type -> BIT STRING .)
+    END             reduce using rule 48 (type -> BIT STRING .)
+    VIRG            reduce using rule 48 (type -> BIT STRING .)
+    RBRACE          reduce using rule 48 (type -> BIT STRING .)
+
+
+state 70
+
+    (44) size -> LPAR . SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> LPAR . SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    SIZE            shift and go to state 89
+
+
+state 71
+
+    (17) struct -> ID EQUALS type extra .
+
+    COMMENT         reduce using rule 17 (struct -> ID EQUALS type extra .)
+    ID              reduce using rule 17 (struct -> ID EQUALS type extra .)
+    IMPORTS         reduce using rule 17 (struct -> ID EQUALS type extra .)
+    EXPORTS         reduce using rule 17 (struct -> ID EQUALS type extra .)
+    END             reduce using rule 17 (struct -> ID EQUALS type extra .)
+
+
+state 72
+
+    (43) extra -> OPTIONAL .
+
+    VIRG            reduce using rule 43 (extra -> OPTIONAL .)
+    RBRACE          reduce using rule 43 (extra -> OPTIONAL .)
+    COMMENT         reduce using rule 43 (extra -> OPTIONAL .)
+    ID              reduce using rule 43 (extra -> OPTIONAL .)
+    IMPORTS         reduce using rule 43 (extra -> OPTIONAL .)
+    EXPORTS         reduce using rule 43 (extra -> OPTIONAL .)
+    END             reduce using rule 43 (extra -> OPTIONAL .)
+
+
+state 73
+
+    (41) extra -> size .
+    (42) extra -> size . OPTIONAL
+
+    VIRG            reduce using rule 41 (extra -> size .)
+    RBRACE          reduce using rule 41 (extra -> size .)
+    COMMENT         reduce using rule 41 (extra -> size .)
+    ID              reduce using rule 41 (extra -> size .)
+    IMPORTS         reduce using rule 41 (extra -> size .)
+    EXPORTS         reduce using rule 41 (extra -> size .)
+    END             reduce using rule 41 (extra -> size .)
+    OPTIONAL        shift and go to state 90
+
+
+state 74
+
+    (24) sequence -> SEQUENCE LBRACE . fields RBRACE
+    (31) fields -> . member VIRG fields
+    (32) fields -> . member
+    (33) member -> . ID type
+    (34) member -> . ID type extra
+    (35) member -> . ID sequence
+    (36) member -> . ID sequence extra
+    (37) member -> . ID set
+    (38) member -> . ID set extra
+    (39) member -> . ID enumerated
+    (40) member -> . ID enumerated extra
+
+    ID              shift and go to state 86
+
+    fields                         shift and go to state 91
+    member                         shift and go to state 85
+
+state 75
+
+    (57) type -> SEQUENCE OF . type
+    (46) type -> . TSTRING
+    (47) type -> . OCTET STRING
+    (48) type -> . BIT STRING
+    (49) type -> . INTEGER
+    (50) type -> . INTEGER range
+    (55) type -> . BOOLEAN
+    (56) type -> . SET OF type
+    (57) type -> . SEQUENCE OF type
+    (58) type -> . OBJECT IDENTIFIER
+    (59) type -> . ROID
+    (60) type -> . CHOICE LBRACE fields RBRACE
+    (61) type -> . ID
+    (62) type -> . NULL
+    (63) type -> . UTCTIME
+
+    TSTRING         shift and go to state 45
+    OCTET           shift and go to state 55
+    BIT             shift and go to state 52
+    INTEGER         shift and go to state 51
+    BOOLEAN         shift and go to state 58
+    SET             shift and go to state 81
+    SEQUENCE        shift and go to state 82
+    OBJECT          shift and go to state 43
+    ROID            shift and go to state 48
+    CHOICE          shift and go to state 56
+    ID              shift and go to state 57
+    NULL            shift and go to state 46
+    UTCTIME         shift and go to state 44
+
+    type                           shift and go to state 92
+
+state 76
+
+    (47) type -> OCTET STRING .
+
+    OPTIONAL        reduce using rule 47 (type -> OCTET STRING .)
+    LPAR            reduce using rule 47 (type -> OCTET STRING .)
+    COMMENT         reduce using rule 47 (type -> OCTET STRING .)
+    ID              reduce using rule 47 (type -> OCTET STRING .)
+    IMPORTS         reduce using rule 47 (type -> OCTET STRING .)
+    EXPORTS         reduce using rule 47 (type -> OCTET STRING .)
+    END             reduce using rule 47 (type -> OCTET STRING .)
+    VIRG            reduce using rule 47 (type -> OCTET STRING .)
+    RBRACE          reduce using rule 47 (type -> OCTET STRING .)
+
+
+state 77
+
+    (60) type -> CHOICE LBRACE . fields RBRACE
+    (31) fields -> . member VIRG fields
+    (32) fields -> . member
+    (33) member -> . ID type
+    (34) member -> . ID type extra
+    (35) member -> . ID sequence
+    (36) member -> . ID sequence extra
+    (37) member -> . ID set
+    (38) member -> . ID set extra
+    (39) member -> . ID enumerated
+    (40) member -> . ID enumerated extra
+
+    ID              shift and go to state 86
+
+    fields                         shift and go to state 93
+    member                         shift and go to state 85
+
+state 78
+
+    (26) enumerated -> ENUMERATED LBRACE . emembers RBRACE
+    (27) emembers -> . emember VIRG emembers
+    (28) emembers -> . emember
+    (29) emember -> . ID
+    (30) emember -> . ID LPAR NUMBER RPAR
+
+    ID              shift and go to state 96
+
+    emember                        shift and go to state 95
+    emembers                       shift and go to state 94
+
+state 79
+
+    (2) statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END .
+
+    $end            reduce using rule 2 (statement -> ID DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END .)
+
+
+state 80
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN . structs END
+    (9) structs -> . struct
+    (10) structs -> . struct structs
+    (11) structs -> . COMMENT
+    (14) struct -> . ID EQUALS sequence
+    (15) struct -> . ID EQUALS enumerated
+    (16) struct -> . ID EQUALS type
+    (17) struct -> . ID EQUALS type extra
+    (18) struct -> . IMPORTS imports HCOMMA
+    (19) struct -> . EXPORTS idlist HCOMMA
+    (20) struct -> . ID EQUALS set
+
+    COMMENT         shift and go to state 18
+    ID              shift and go to state 23
+    IMPORTS         shift and go to state 20
+    EXPORTS         shift and go to state 22
+
+    struct                         shift and go to state 19
+    structs                        shift and go to state 97
+
+state 81
+
+    (56) type -> SET . OF type
+
+    OF              shift and go to state 65
+
+
+state 82
+
+    (57) type -> SEQUENCE . OF type
+
+    OF              shift and go to state 75
+
+
+state 83
+
+    (56) type -> SET OF type .
+
+    OPTIONAL        reduce using rule 56 (type -> SET OF type .)
+    LPAR            reduce using rule 56 (type -> SET OF type .)
+    COMMENT         reduce using rule 56 (type -> SET OF type .)
+    ID              reduce using rule 56 (type -> SET OF type .)
+    IMPORTS         reduce using rule 56 (type -> SET OF type .)
+    EXPORTS         reduce using rule 56 (type -> SET OF type .)
+    END             reduce using rule 56 (type -> SET OF type .)
+    VIRG            reduce using rule 56 (type -> SET OF type .)
+    RBRACE          reduce using rule 56 (type -> SET OF type .)
+
+
+state 84
+
+    (25) set -> SET LBRACE fields . RBRACE
+
+    RBRACE          shift and go to state 98
+
+
+state 85
+
+    (31) fields -> member . VIRG fields
+    (32) fields -> member .
+
+    VIRG            shift and go to state 99
+    RBRACE          reduce using rule 32 (fields -> member .)
+
+
+state 86
+
+    (33) member -> ID . type
+    (34) member -> ID . type extra
+    (35) member -> ID . sequence
+    (36) member -> ID . sequence extra
+    (37) member -> ID . set
+    (38) member -> ID . set extra
+    (39) member -> ID . enumerated
+    (40) member -> ID . enumerated extra
+    (46) type -> . TSTRING
+    (47) type -> . OCTET STRING
+    (48) type -> . BIT STRING
+    (49) type -> . INTEGER
+    (50) type -> . INTEGER range
+    (55) type -> . BOOLEAN
+    (56) type -> . SET OF type
+    (57) type -> . SEQUENCE OF type
+    (58) type -> . OBJECT IDENTIFIER
+    (59) type -> . ROID
+    (60) type -> . CHOICE LBRACE fields RBRACE
+    (61) type -> . ID
+    (62) type -> . NULL
+    (63) type -> . UTCTIME
+    (24) sequence -> . SEQUENCE LBRACE fields RBRACE
+    (25) set -> . SET LBRACE fields RBRACE
+    (26) enumerated -> . ENUMERATED LBRACE emembers RBRACE
+
+    TSTRING         shift and go to state 45
+    OCTET           shift and go to state 55
+    BIT             shift and go to state 52
+    INTEGER         shift and go to state 51
+    BOOLEAN         shift and go to state 58
+    SET             shift and go to state 47
+    SEQUENCE        shift and go to state 104
+    OBJECT          shift and go to state 43
+    ROID            shift and go to state 48
+    CHOICE          shift and go to state 56
+    ID              shift and go to state 57
+    NULL            shift and go to state 46
+    UTCTIME         shift and go to state 44
+    ENUMERATED      shift and go to state 59
+
+    set                            shift and go to state 100
+    sequence                       shift and go to state 101
+    enumerated                     shift and go to state 102
+    type                           shift and go to state 103
+
+state 87
+
+    (52) range -> LPAR MIN . DOT DOT NUMBER RPAR
+    (54) range -> LPAR MIN . DOT DOT MAX RPAR
+
+    DOT             shift and go to state 105
+
+
+state 88
+
+    (51) range -> LPAR NUMBER . DOT DOT NUMBER RPAR
+    (53) range -> LPAR NUMBER . DOT DOT MAX RPAR
+
+    DOT             shift and go to state 106
+
+
+state 89
+
+    (44) size -> LPAR SIZE . LPAR NUMBER RPAR RPAR
+    (45) size -> LPAR SIZE . LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    LPAR            shift and go to state 107
+
+
+state 90
+
+    (42) extra -> size OPTIONAL .
+
+    VIRG            reduce using rule 42 (extra -> size OPTIONAL .)
+    RBRACE          reduce using rule 42 (extra -> size OPTIONAL .)
+    COMMENT         reduce using rule 42 (extra -> size OPTIONAL .)
+    ID              reduce using rule 42 (extra -> size OPTIONAL .)
+    IMPORTS         reduce using rule 42 (extra -> size OPTIONAL .)
+    EXPORTS         reduce using rule 42 (extra -> size OPTIONAL .)
+    END             reduce using rule 42 (extra -> size OPTIONAL .)
+
+
+state 91
+
+    (24) sequence -> SEQUENCE LBRACE fields . RBRACE
+
+    RBRACE          shift and go to state 108
+
+
+state 92
+
+    (57) type -> SEQUENCE OF type .
+
+    OPTIONAL        reduce using rule 57 (type -> SEQUENCE OF type .)
+    LPAR            reduce using rule 57 (type -> SEQUENCE OF type .)
+    COMMENT         reduce using rule 57 (type -> SEQUENCE OF type .)
+    ID              reduce using rule 57 (type -> SEQUENCE OF type .)
+    IMPORTS         reduce using rule 57 (type -> SEQUENCE OF type .)
+    EXPORTS         reduce using rule 57 (type -> SEQUENCE OF type .)
+    END             reduce using rule 57 (type -> SEQUENCE OF type .)
+    VIRG            reduce using rule 57 (type -> SEQUENCE OF type .)
+    RBRACE          reduce using rule 57 (type -> SEQUENCE OF type .)
+
+
+state 93
+
+    (60) type -> CHOICE LBRACE fields . RBRACE
+
+    RBRACE          shift and go to state 109
+
+
+state 94
+
+    (26) enumerated -> ENUMERATED LBRACE emembers . RBRACE
+
+    RBRACE          shift and go to state 110
+
+
+state 95
+
+    (27) emembers -> emember . VIRG emembers
+    (28) emembers -> emember .
+
+    VIRG            shift and go to state 111
+    RBRACE          reduce using rule 28 (emembers -> emember .)
+
+
+state 96
+
+    (29) emember -> ID .
+    (30) emember -> ID . LPAR NUMBER RPAR
+
+    VIRG            reduce using rule 29 (emember -> ID .)
+    RBRACE          reduce using rule 29 (emember -> ID .)
+    LPAR            shift and go to state 112
+
+
+state 97
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs . END
+
+    END             shift and go to state 113
+
+
+state 98
+
+    (25) set -> SET LBRACE fields RBRACE .
+
+    OPTIONAL        reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    LPAR            reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    VIRG            reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    RBRACE          reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    COMMENT         reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    ID              reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    IMPORTS         reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    EXPORTS         reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+    END             reduce using rule 25 (set -> SET LBRACE fields RBRACE .)
+
+
+state 99
+
+    (31) fields -> member VIRG . fields
+    (31) fields -> . member VIRG fields
+    (32) fields -> . member
+    (33) member -> . ID type
+    (34) member -> . ID type extra
+    (35) member -> . ID sequence
+    (36) member -> . ID sequence extra
+    (37) member -> . ID set
+    (38) member -> . ID set extra
+    (39) member -> . ID enumerated
+    (40) member -> . ID enumerated extra
+
+    ID              shift and go to state 86
+
+    fields                         shift and go to state 114
+    member                         shift and go to state 85
+
+state 100
+
+    (37) member -> ID set .
+    (38) member -> ID set . extra
+    (41) extra -> . size
+    (42) extra -> . size OPTIONAL
+    (43) extra -> . OPTIONAL
+    (44) size -> . LPAR SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> . LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    VIRG            reduce using rule 37 (member -> ID set .)
+    RBRACE          reduce using rule 37 (member -> ID set .)
+    OPTIONAL        shift and go to state 72
+    LPAR            shift and go to state 70
+
+    size                           shift and go to state 73
+    extra                          shift and go to state 115
+
+state 101
+
+    (35) member -> ID sequence .
+    (36) member -> ID sequence . extra
+    (41) extra -> . size
+    (42) extra -> . size OPTIONAL
+    (43) extra -> . OPTIONAL
+    (44) size -> . LPAR SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> . LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    VIRG            reduce using rule 35 (member -> ID sequence .)
+    RBRACE          reduce using rule 35 (member -> ID sequence .)
+    OPTIONAL        shift and go to state 72
+    LPAR            shift and go to state 70
+
+    size                           shift and go to state 73
+    extra                          shift and go to state 116
+
+state 102
+
+    (39) member -> ID enumerated .
+    (40) member -> ID enumerated . extra
+    (41) extra -> . size
+    (42) extra -> . size OPTIONAL
+    (43) extra -> . OPTIONAL
+    (44) size -> . LPAR SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> . LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    VIRG            reduce using rule 39 (member -> ID enumerated .)
+    RBRACE          reduce using rule 39 (member -> ID enumerated .)
+    OPTIONAL        shift and go to state 72
+    LPAR            shift and go to state 70
+
+    size                           shift and go to state 73
+    extra                          shift and go to state 117
+
+state 103
+
+    (33) member -> ID type .
+    (34) member -> ID type . extra
+    (41) extra -> . size
+    (42) extra -> . size OPTIONAL
+    (43) extra -> . OPTIONAL
+    (44) size -> . LPAR SIZE LPAR NUMBER RPAR RPAR
+    (45) size -> . LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR
+
+    VIRG            reduce using rule 33 (member -> ID type .)
+    RBRACE          reduce using rule 33 (member -> ID type .)
+    OPTIONAL        shift and go to state 72
+    LPAR            shift and go to state 70
+
+    size                           shift and go to state 73
+    extra                          shift and go to state 118
+
+state 104
+
+    (57) type -> SEQUENCE . OF type
+    (24) sequence -> SEQUENCE . LBRACE fields RBRACE
+
+    OF              shift and go to state 75
+    LBRACE          shift and go to state 74
+
+
+state 105
+
+    (52) range -> LPAR MIN DOT . DOT NUMBER RPAR
+    (54) range -> LPAR MIN DOT . DOT MAX RPAR
+
+    DOT             shift and go to state 119
+
+
+state 106
+
+    (51) range -> LPAR NUMBER DOT . DOT NUMBER RPAR
+    (53) range -> LPAR NUMBER DOT . DOT MAX RPAR
+
+    DOT             shift and go to state 120
+
+
+state 107
+
+    (44) size -> LPAR SIZE LPAR . NUMBER RPAR RPAR
+    (45) size -> LPAR SIZE LPAR . NUMBER DOT DOT NUMBER RPAR RPAR
+
+    NUMBER          shift and go to state 121
+
+
+state 108
+
+    (24) sequence -> SEQUENCE LBRACE fields RBRACE .
+
+    COMMENT         reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    ID              reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    IMPORTS         reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    EXPORTS         reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    END             reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    OPTIONAL        reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    LPAR            reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    VIRG            reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+    RBRACE          reduce using rule 24 (sequence -> SEQUENCE LBRACE fields RBRACE .)
+
+
+state 109
+
+    (60) type -> CHOICE LBRACE fields RBRACE .
+
+    OPTIONAL        reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    LPAR            reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    COMMENT         reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    ID              reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    IMPORTS         reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    EXPORTS         reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    END             reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    VIRG            reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+    RBRACE          reduce using rule 60 (type -> CHOICE LBRACE fields RBRACE .)
+
+
+state 110
+
+    (26) enumerated -> ENUMERATED LBRACE emembers RBRACE .
+
+    OPTIONAL        reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    LPAR            reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    VIRG            reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    RBRACE          reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    COMMENT         reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    ID              reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    IMPORTS         reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    EXPORTS         reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+    END             reduce using rule 26 (enumerated -> ENUMERATED LBRACE emembers RBRACE .)
+
+
+state 111
+
+    (27) emembers -> emember VIRG . emembers
+    (27) emembers -> . emember VIRG emembers
+    (28) emembers -> . emember
+    (29) emember -> . ID
+    (30) emember -> . ID LPAR NUMBER RPAR
+
+    ID              shift and go to state 96
+
+    emember                        shift and go to state 95
+    emembers                       shift and go to state 122
+
+state 112
+
+    (30) emember -> ID LPAR . NUMBER RPAR
+
+    NUMBER          shift and go to state 123
+
+
+state 113
+
+    (3) statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END .
+
+    $end            reduce using rule 3 (statement -> ID LBRACE arcs RBRACE DEFINITIONS AUTOMATIC TAGS EQUALS BEGIN structs END .)
+
+
+state 114
+
+    (31) fields -> member VIRG fields .
+
+    RBRACE          reduce using rule 31 (fields -> member VIRG fields .)
+
+
+state 115
+
+    (38) member -> ID set extra .
+
+    VIRG            reduce using rule 38 (member -> ID set extra .)
+    RBRACE          reduce using rule 38 (member -> ID set extra .)
+
+
+state 116
+
+    (36) member -> ID sequence extra .
+
+    VIRG            reduce using rule 36 (member -> ID sequence extra .)
+    RBRACE          reduce using rule 36 (member -> ID sequence extra .)
+
+
+state 117
+
+    (40) member -> ID enumerated extra .
+
+    VIRG            reduce using rule 40 (member -> ID enumerated extra .)
+    RBRACE          reduce using rule 40 (member -> ID enumerated extra .)
+
+
+state 118
+
+    (34) member -> ID type extra .
+
+    VIRG            reduce using rule 34 (member -> ID type extra .)
+    RBRACE          reduce using rule 34 (member -> ID type extra .)
+
+
+state 119
+
+    (52) range -> LPAR MIN DOT DOT . NUMBER RPAR
+    (54) range -> LPAR MIN DOT DOT . MAX RPAR
+
+    NUMBER          shift and go to state 125
+    MAX             shift and go to state 124
+
+
+state 120
+
+    (51) range -> LPAR NUMBER DOT DOT . NUMBER RPAR
+    (53) range -> LPAR NUMBER DOT DOT . MAX RPAR
+
+    NUMBER          shift and go to state 127
+    MAX             shift and go to state 126
+
+
+state 121
+
+    (44) size -> LPAR SIZE LPAR NUMBER . RPAR RPAR
+    (45) size -> LPAR SIZE LPAR NUMBER . DOT DOT NUMBER RPAR RPAR
+
+    RPAR            shift and go to state 128
+    DOT             shift and go to state 129
+
+
+state 122
+
+    (27) emembers -> emember VIRG emembers .
+
+    RBRACE          reduce using rule 27 (emembers -> emember VIRG emembers .)
+
+
+state 123
+
+    (30) emember -> ID LPAR NUMBER . RPAR
+
+    RPAR            shift and go to state 130
+
+
+state 124
+
+    (54) range -> LPAR MIN DOT DOT MAX . RPAR
+
+    RPAR            shift and go to state 131
+
+
+state 125
+
+    (52) range -> LPAR MIN DOT DOT NUMBER . RPAR
+
+    RPAR            shift and go to state 132
+
+
+state 126
+
+    (53) range -> LPAR NUMBER DOT DOT MAX . RPAR
+
+    RPAR            shift and go to state 133
+
+
+state 127
+
+    (51) range -> LPAR NUMBER DOT DOT NUMBER . RPAR
+
+    RPAR            shift and go to state 134
+
+
+state 128
+
+    (44) size -> LPAR SIZE LPAR NUMBER RPAR . RPAR
+
+    RPAR            shift and go to state 135
+
+
+state 129
+
+    (45) size -> LPAR SIZE LPAR NUMBER DOT . DOT NUMBER RPAR RPAR
+
+    DOT             shift and go to state 136
+
+
+state 130
+
+    (30) emember -> ID LPAR NUMBER RPAR .
+
+    VIRG            reduce using rule 30 (emember -> ID LPAR NUMBER RPAR .)
+    RBRACE          reduce using rule 30 (emember -> ID LPAR NUMBER RPAR .)
+
+
+state 131
+
+    (54) range -> LPAR MIN DOT DOT MAX RPAR .
+
+    OPTIONAL        reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    LPAR            reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    COMMENT         reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    ID              reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    IMPORTS         reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    EXPORTS         reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    END             reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    VIRG            reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+    RBRACE          reduce using rule 54 (range -> LPAR MIN DOT DOT MAX RPAR .)
+
+
+state 132
+
+    (52) range -> LPAR MIN DOT DOT NUMBER RPAR .
+
+    OPTIONAL        reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    LPAR            reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    COMMENT         reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    ID              reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    IMPORTS         reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    EXPORTS         reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    END             reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    VIRG            reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+    RBRACE          reduce using rule 52 (range -> LPAR MIN DOT DOT NUMBER RPAR .)
+
+
+state 133
+
+    (53) range -> LPAR NUMBER DOT DOT MAX RPAR .
+
+    OPTIONAL        reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    LPAR            reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    COMMENT         reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    ID              reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    IMPORTS         reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    EXPORTS         reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    END             reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    VIRG            reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+    RBRACE          reduce using rule 53 (range -> LPAR NUMBER DOT DOT MAX RPAR .)
+
+
+state 134
+
+    (51) range -> LPAR NUMBER DOT DOT NUMBER RPAR .
+
+    OPTIONAL        reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    LPAR            reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    COMMENT         reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    ID              reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    IMPORTS         reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    EXPORTS         reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    END             reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    VIRG            reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+    RBRACE          reduce using rule 51 (range -> LPAR NUMBER DOT DOT NUMBER RPAR .)
+
+
+state 135
+
+    (44) size -> LPAR SIZE LPAR NUMBER RPAR RPAR .
+
+    OPTIONAL        reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    VIRG            reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    RBRACE          reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    COMMENT         reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    ID              reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    IMPORTS         reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    EXPORTS         reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+    END             reduce using rule 44 (size -> LPAR SIZE LPAR NUMBER RPAR RPAR .)
+
+
+state 136
+
+    (45) size -> LPAR SIZE LPAR NUMBER DOT DOT . NUMBER RPAR RPAR
+
+    NUMBER          shift and go to state 137
+
+
+state 137
+
+    (45) size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER . RPAR RPAR
+
+    RPAR            shift and go to state 138
+
+
+state 138
+
+    (45) size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR . RPAR
+
+    RPAR            shift and go to state 139
+
+
+state 139
+
+    (45) size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .
+
+    OPTIONAL        reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    VIRG            reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    RBRACE          reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    COMMENT         reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    ID              reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    IMPORTS         reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    EXPORTS         reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+    END             reduce using rule 45 (size -> LPAR SIZE LPAR NUMBER DOT DOT NUMBER RPAR RPAR .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LPAR in state 51 resolved as shift

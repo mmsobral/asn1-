@@ -1,0 +1,29 @@
+Ativo DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+ 
+IMPORTS Lista,Nome,Tipos FROM Modulo 
+       Extra,Outro FROM Modulo;
+ 
+Teste ::= ENUMERATED {um, dois, tres}
+ 
+Numero ::= INTEGER
+ 
+Ativo ::= SEQUENCE {
+  nome Nome,
+  codigo SEQUENCE OF Numero,
+  valor SEQUENCE OF Extra,
+  data NumericString(SIZE(8)),
+  horario NumericString (SIZE(6)),
+  cod Teste,
+  ind Numero,
+  conteudo Conteudo
+}
+ 
+Conteudo ::= CHOICE {
+    ex Extra,
+    ot Outro,
+    mais PrintableString (SIZE(2..8)),
+    num Tipos
+  }
+ 
+END

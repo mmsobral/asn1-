@@ -1,0 +1,18 @@
+PubSub DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+
+Mensagem ::= SEQUENCE {
+  msg CHOICE {
+    pub Publish,
+    notif Notify,
+    chk Check,
+    sub Subscribe,
+    unsub Unsubscribe
+  }
+}
+
+Publish ::= SEQUENCE {
+}
+
+ 
+END

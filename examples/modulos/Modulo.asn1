@@ -1,0 +1,23 @@
+Modulo DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+ 
+EXPORTS Tipos,Nome,Lista,Extra,Outro;
+ 
+Tipos ::= ENUMERATED {um, dois, tres}
+ 
+Nome ::= PrintableString (SIZE(2..16))
+ 
+Lista ::= SEQUENCE OF Nome
+ 
+Extra ::= SEQUENCE {
+  id INTEGER,
+  desc PrintableString
+}
+ 
+Outro ::= SEQUENCE {
+  id INTEGER,
+  ok BOOLEAN,
+  valor Lista
+}
+ 
+END

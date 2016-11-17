@@ -1,0 +1,2 @@
+
+TOBJS=IntList.o BoolList.o Tipo1.o Tipo2.o Ativo.o
