@@ -1,0 +1,276 @@
+#include <asn1++/asn1-string.h>
+#include <asn1++/asn1-bitstring.h>
+#include <asn1++/asn1-oid.h>
+#include <asn1++/asn1-relative-oid.h>
+#include <string>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+ASN1String::ASN1String(const string & astr) {
+  ptr = new OCTET_STRING_t;
+  (*this) = "";
+  destroy = true;
+}
+
+ASN1String::ASN1String(OCTET_STRING_t & astr) : ptr(&astr) {}
+
+ASN1String::ASN1String(const string & astr) {
+  ptr = new OCTET_STRING_t;
+  *(this)=astr;
+  destroy = true;
+}
+
+ASN1String & ASN1String::operator=(const char * s) {
+  OCTET_STRING_fromString(ptr, s);
+  return *this;
+}
+
+ASN1String & ASN1String::operator=(const string & s) {
+  OCTET_STRING_fromString(ptr, s.c_str());
+  return *this;
+}
+
+ASN1String & ASN1String::operator+=(const string & s) {
+  *this = str() + s;
+}
+
+ASN1String & ASN1String::operator+=(const char * s) {
+  *this = str() + s;
+}
+
+string  ASN1String::str() const {
+  char * buffer;
+
+  buffer = new char[ptr->size+1];
+  memcpy(buffer, ptr->buf, ptr->size);
+  buffer[ptr->size] = 0;
+  string s(buffer);
+  delete buffer;
+
+  return s;
+}
+
+// ASN1BitString
+
+ASN1BitString::ASN1BitString(BIT_STRING_t & bs, int nbits) : ptr(&bs), bits(nbits) {
+    ptr->size = 1 + ((bits-1) >> 8);
+    ptr->bits_unused = (ptr->size<<8) - bits;
+    ptr->buf = new uint8_t[ptr->size];
+    bzero(ptr->buf, ptr->size);
+}
+
+void ASN1BitString::set(int pos) {
+    if (pos >= bits) throw -1;
+    int n = pos >> 8;
+    int m = pos % 256;
+    uint8_t mask = 1 << m;
+    ptr->buf[n] |= mask;
+}
+
+void ASN1BitString::reset(int pos) {
+    if (pos >= bits) throw -1;
+    int n = pos >> 8;
+    int m = pos % 256;
+    uint8_t mask = 1 << m;
+    ptr->buf[n] ^= mask;
+}
+
+bool ASN1BitString::get(int pos) {
+    if (pos >= bits) throw -1;
+    int n = pos >> 8;
+    int m = pos % 256;
+    uint8_t mask = 1 << m;
+    return (ptr->buf[n] & mask) != 0;
+}
+
+void ASN1BitString::clear() {
+  int m, n;
+  int octets = bits >> 8;
+  int resto = bits % 8;
+
+  for (m = 0; m < octets; m++) ptr->buf[m] = 0;
+  for (m=0, n=0; n < resto; n++) {
+    m = m << 1;
+    m != 1;
+  }
+  ptr->buf[octets-1] ^= m;
+}  
+
+void ASN1BitString::enable() {
+  int m, n;
+  int octets = bits >> 8;
+  int resto = bits % 8;
+
+  for (m = 0; m < octets; m++) ptr->buf[m] = 0xff;
+  for (m=0, n=0; n < resto; n++) {
+    m = m << 1;
+    m != 1;
+  }
+  ptr->buf[octets-1] |= m;
+}  
+
+// ASN1Oid
+
+ASN1Oid::ASN1Oid(OBJECT_IDENTIFIER_t & oid) : ptr(&oid), external(true) {}
+
+ASN1Oid::ASN1Oid() : external(false) {
+  ptr = new OBJECT_IDENTIFIER_t;
+}
+
+ASN1Oid::~ASN1Oid() {
+  if (not external) delete ptr;
+}
+
+ASN1Oid & ASN1Oid::operator=(const string & oid) {
+
+  fromString(oid);
+  return *this;
+}
+
+string ASN1Oid::str() const {
+    long arcs[32];
+    int n = this->get_arcs(ptr, arcs, sizeof(arcs[0]), 32);
+    if (n < 0) throw -1;
+
+    ostringstream s;
+    if (n > 0) {
+      s << arcs[0];
+      for (int k=1; k < n; k++) s << "." << arcs[k];
+    }
+    return s.str();
+}
+
+ASN1Oid & ASN1Oid::operator+=(const ASN1Oid & other) {
+    string obj = other.str();
+    *this += obj;
+    return *this;
+}
+
+ASN1Oid &  ASN1Oid::operator+=(const string & oid) {
+    string obj = this->str();
+    if (obj.size() > 0) {
+      if (oid.size() > 0) obj = obj + "." + oid;
+    } else obj = oid;
+    *this = obj;
+    return *this;
+}
+
+ASN1Oid::iterator::iterator(const ASN1Oid & ptr) {
+  pos = 0;
+  arcs = new long[32];
+  len = ptr.get_arcs(ptr.ptr, arcs, sizeof(arcs[0]), 32);
+}
+
+ASN1Oid::iterator::iterator() {
+  pos = 0;
+  arcs = NULL;
+}
+
+ASN1Oid::iterator::iterator(const iterator & it) : pos(it.pos), len(it.len) {
+  if (it.arcs) {
+     arcs = new long[32];
+     memcpy(arcs, it.arcs, len*sizeof(long));
+  } else arcs = NULL;
+}
+
+ASN1Oid::iterator::~iterator() { 
+  if (arcs) delete arcs;
+}
+
+ASN1Oid::iterator& ASN1Oid::iterator::operator++() {
+  if (pos < len) pos++;
+  else throw -1;
+  if (pos == len) {
+    delete[] arcs;
+    arcs = NULL;
+  }
+  return *this;
+}
+
+ASN1Oid::iterator ASN1Oid::iterator::operator++(int) {
+  ASN1Oid::iterator novo = *this;
+  ++(*this);
+  return novo;
+}
+
+long & ASN1Oid::iterator::operator*() const {
+  if (pos == len) throw -1;
+  return arcs[pos];
+}
+
+bool ASN1Oid::iterator::operator==(const ASN1Oid::iterator &it) const {
+  // estas duas comparações se aplicam ao caso de um dos iteradores ser "fim"
+  if ((arcs == NULL) and (it.arcs == NULL)) return true;
+  if ((arcs == NULL) or (it.arcs == NULL)) return false;
+
+  bool ok = (pos == it.pos) and (len == it.len);
+  if (ok) ok = (memcmp(arcs, it.arcs, len*sizeof(long)) == 0);
+  return ok;
+}
+
+bool ASN1Oid::iterator::operator!=(const ASN1Oid::iterator &it) const {
+  return not (*this == it);
+} 
+
+ASN1Oid::iterator ASN1Oid::begin() const {
+  ASN1Oid::iterator it(*this);
+
+  return it;
+}
+
+ASN1Oid::iterator ASN1Oid::end() const {
+  ASN1Oid::iterator it;
+
+  return it;    
+}
+
+//typedef int (*Farcs)(const OBJECT_IDENTIFIER_t *, void *, unsigned int, unsigned int);
+
+
+int ASN1Oid::get_arcs(OBJECT_IDENTIFIER_t *oid,
+        void *arcs, unsigned int type_size, unsigned int slots) const {
+  //Farcs f = (Farcs)OBJECT_IDENTIFIER_get_arcs;
+  //return f(oid, arcs, type_size, slots);
+  return OBJECT_IDENTIFIER_get_arcs(oid, arcs, type_size, slots);
+}
+
+int ASN1Oid::set_arcs(OBJECT_IDENTIFIER_t *oid,
+        void *arcs, unsigned int type_size, unsigned int slots) {
+  return OBJECT_IDENTIFIER_set_arcs(oid, arcs, type_size, slots);
+}
+
+void ASN1Oid::fromString(const string & oid) {
+    long arcs[32];
+
+    int n = OBJECT_IDENTIFIER_parse_arcs(oid.c_str(), -1, arcs, 32, NULL);
+    if (n < 0) throw -1;
+    n = set_arcs(ptr, arcs, sizeof(arcs[0]), n);
+    if (n) {
+      perror("");
+      throw -1;
+    }
+}
+
+// ASN1RelativeOid
+
+ASN1RelativeOid::ASN1RelativeOid(RELATIVE_OID_t & oid) : ASN1Oid(oid) {}
+
+ASN1RelativeOid::ASN1RelativeOid() : ASN1Oid() { }
+
+int ASN1RelativeOid::get_arcs(OBJECT_IDENTIFIER_t *oid,
+        void *arcs, unsigned int type_size, unsigned int slots) const {
+  return RELATIVE_OID_get_arcs(oid, arcs, type_size, slots);
+}
+
+int ASN1RelativeOid::set_arcs(OBJECT_IDENTIFIER_t *oid,
+        void *arcs, unsigned int type_size, unsigned int slots) {
+  return RELATIVE_OID_set_arcs(oid, arcs, type_size, slots);
+}
+
+ASN1RelativeOid & ASN1RelativeOid::operator=(const string & oid) {
+  fromString(oid);
+  return *this;
+}
+

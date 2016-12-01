@@ -1,0 +1,37 @@
+#ifndef ASN1STRING
+#define ASN1STRING
+
+#include <OCTET_STRING.h>
+#include <string>
+
+using namespace std;
+
+// classe para auxiliar o acesso, conversão e modificação de strings ASN1
+class ASN1String {
+ protected:
+  OCTET_STRING_t * ptr;
+  bool destroy;
+ public:
+  // Constructor: parâmetro "astr" é um ponteiro para uma string ASN1
+  ASN1String(OCTET_STRING_t & astr);
+  ASN1String(const string & astr);
+  ASN1String(const ASN1String & other);
+  ASN1String();
+  virtual ~ASN1String() {if (destroy) delete ptr;}
+
+  // Operadores de atribuição: uma forma conveniente de modificar a string
+  virtual ASN1String & operator=(const char * s);
+  virtual ASN1String & operator=(const string & s);
+  virtual ASN1String & operator=(const ASN1String & other);
+
+  // Operadores de concatenação: uma forma conveniente de modificar a string
+  virtual ASN1String & operator+=(const string & s);
+  virtual ASN1String & operator+=(const char * s);
+
+  OCTET_STRING_t & _get_data() const { return *ptr;}
+
+  // retorna o valor da string
+  string str() const;
+};
+
+#endif
