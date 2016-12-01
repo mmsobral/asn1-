@@ -32,7 +32,7 @@ else
   libasn=asn1++_32
 endif
 
-CFLAGS=-g -I. -I../include -std=c++0x
+CFLAGS=-g -I. -I../include
 LDFLAGS=-L../lib -l$(libasn)
 
 all: $(OBJS) $(TOBJS) $(MYOBJS)
