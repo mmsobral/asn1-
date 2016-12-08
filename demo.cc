@@ -7,6 +7,12 @@ using namespace std;
 int main() {
   TAtivo pkt;
 
+  /*ASN1Oid o;
+  o = "1.3.4.5";
+  cout << "o: " << o.str() << endl;
+  return 0;
+  */
+
   // definindo os valores de varios campos 
   TAtivo::Choice_id & id = pkt.get_id();
   id.set_nome("PETR3");
@@ -16,6 +22,8 @@ int main() {
   //pkt.set_nome( "PETR3");
   pkt.set_data("30092015");
   pkt.set_horario("135812");
+
+  pkt.set_oid("1.3.5.4");
 
   // verifica se os valores contidos na estrutura de dados respeitam
   // a especificação
@@ -46,6 +54,16 @@ int main() {
   if (other) {
     cout << "Estrutura de dados obtida da decodificação XER:" << endl;
     other->show();
+    ASN1Oid & oid = other->get_oid_attr();
+    cout << "OID: " << oid.str() << endl;
+    ASN1Oid prefixo;
+    prefixo = "1.3.5";
+    oid.get_prefix(prefixo);
+    cout << "Prefixo do OID: " << prefixo.str() << endl;
+    oid.get_prefix(prefixo,2);
+    cout << "Prefixo do OID: " << prefixo.str() << endl;
+    oid.get_prefix(prefixo,3);
+    cout << "Prefixo do OID: " << prefixo.str() << endl;
   } else cerr << "Erro: não consegui decodificar a estrutura de dados ..." << endl;
 
   // devem-se destruir explicitamente as estruturas de dados obtidas 

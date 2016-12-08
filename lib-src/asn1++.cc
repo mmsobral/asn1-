@@ -122,16 +122,52 @@ ASN1Oid::ASN1Oid(OBJECT_IDENTIFIER_t & oid) : ptr(&oid), external(true) {}
 
 ASN1Oid::ASN1Oid() : external(false) {
   ptr = new OBJECT_IDENTIFIER_t;
+  bzero(ptr, sizeof(OBJECT_IDENTIFIER_t));
+}
+
+ASN1Oid::ASN1Oid(const ASN1Oid & o) : external(false) {
+  ptr = new OBJECT_IDENTIFIER_t;
+  bzero(ptr, sizeof(OBJECT_IDENTIFIER_t));
+  fromString(o.str());
+}
+
+ASN1Oid::ASN1Oid(const string & s) : external(false) {
+  ptr = new OBJECT_IDENTIFIER_t;
+  bzero(ptr, sizeof(OBJECT_IDENTIFIER_t));
+  fromString(s);
 }
 
 ASN1Oid::~ASN1Oid() {
   if (not external) delete ptr;
 }
 
-ASN1Oid & ASN1Oid::operator=(const string & oid) {
+ASN1Oid & ASN1Oid::operator=(const ASN1Oid & oid) {
+  fromString(oid.str());
+  return *this;
+}
 
+ASN1Oid & ASN1Oid::operator=(const string & oid) {
   fromString(oid);
   return *this;
+}
+
+void ASN1Oid::get_prefix(ASN1Oid & oid) const {
+  get_prefix(oid, 1);
+}
+
+void ASN1Oid::get_prefix(ASN1Oid & oid, unsigned int N) const {
+    long arcs[32];
+    int n = this->get_arcs(ptr, arcs, sizeof(arcs[0]), 32);
+    if (n <= N) throw n;
+
+    n -= N;
+    string s;
+    s += to_string(arcs[0]);
+    for (int i=1; i < n; i++) {
+      s += '.';
+      s += to_string(arcs[i]);
+    }
+    oid.fromString(s);
 }
 
 bool ASN1Oid::operator>(const ASN1Oid & other) const {

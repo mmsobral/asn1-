@@ -14,6 +14,8 @@ class ASN1Oid {
  public:
   // Construtor: o parâmetro é um OBJECT IDENTIFIER
   ASN1Oid(OBJECT_IDENTIFIER_t & oid);
+  ASN1Oid(const ASN1Oid & oid);
+  ASN1Oid(const string & oid);
 
   // Construtor: cria automaticamente o OID encapsulado
   ASN1Oid();
@@ -22,9 +24,16 @@ class ASN1Oid {
 
   // Operador de atribuição: facilita a definição do OID por meio de uma string (ex: "1.3.6.4")
   virtual ASN1Oid & operator=(const string & oid);
+  virtual ASN1Oid & operator=(const ASN1Oid & oid);
 
   // retorna o valor do OID como uma string
   string str() const;
+
+  // obtem o prefixo deste OID N níveis acima
+  void get_prefix(ASN1Oid & oid, unsigned int N) const;
+
+  // obtem o prefixo deste OID um nível acima
+  void get_prefix(ASN1Oid & oid) const;
 
   // Operador de concatenação, que posibilita concatenar OIDs
   virtual ASN1Oid & operator+=(const ASN1Oid & other);

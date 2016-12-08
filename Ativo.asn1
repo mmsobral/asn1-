@@ -6,6 +6,7 @@ Ativo ::= SEQUENCE {
   nome PrintableString(SIZE(1..16)),
   codigo INTEGER
   },
+  oid OBJECT IDENTIFIER,
   valor INTEGER,
   data NumericString(SIZE(8)),
   horario NumericString (SIZE(6))
