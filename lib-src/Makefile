@@ -1,6 +1,13 @@
+install64: lib64
+	cp libasn1++_64.a ../lib/
+
+install32: lib32
+	cp libasn1++_32.a ../lib/
+
+#all: lib64
 all: lib32 lib64
 CFLAGS=-fPIC -g -I. -c
-CXXFLAGS=-std=c++0x
+CXXFLAGS=-std=c++11
 
 lib32:
 	g++ $(CFLAGS) $(CXXFLAGS) -m32 *.cc
