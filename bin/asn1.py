@@ -348,6 +348,18 @@ class List(Type):
     r += '%s  }\n' % sep
     return r
 
+  def dependencies(self):
+    r = []
+    member = self.inner
+    #print self.name, member.typename, member.__class__, isinstance(member, Struct)
+    if isinstance(member, Struct):
+      r.append(member.typename)
+    elif isinstance(member, List):
+      r += member.dependencies()
+    elif isinstance(member,Composable):
+      r += member.dependencies()
+    return r
+
 class StubType(Type):
 
   def __init__(self, typename, module=''):
@@ -479,6 +491,8 @@ class Composable(Type):
       #print self.name, member.typename, member.__class__, isinstance(member, Struct)
       if isinstance(member, Struct):
         r.append(member.typename)
+      elif isinstance(member, List):
+        r += member.dependencies()
       elif isinstance(member,Composable):
         r += member.dependencies()
     return r
@@ -812,9 +826,9 @@ class Module:
     while orig:
       for field in orig:
         ok = True
-        #print '>>', field
+        print '>>', field
         for m in field.dependencies():
-          #print '--', field.name, m
+          print '--', field.name, m
           if not m in tipos:
             ok = False
             break
