@@ -12,7 +12,7 @@ template <typename T>  ASN1DataType<T>::ASN1DataType(asn_TYPE_descriptor_t * des
 template <typename T>  ASN1DataType<T>::ASN1DataType(asn_TYPE_descriptor_t * desc, T * apkt) : DESC(desc), pkt(apkt) { destroy = true; }
 
 template <typename T>  ASN1DataType<T>::~ASN1DataType() {
-  if (destroy) DESC->free_struct(DESC, pkt, 0);
+  //if (destroy) DESC->free_struct(DESC, pkt, 0);
 }
 
 template <typename T> void ASN1DataType<T>::set_destroy(bool val) {

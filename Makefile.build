@@ -15,7 +15,7 @@ MYOBJS=demo.o
 PROG=demo
 
 # Substitua aqui o nome do seu arquivo com a especificação ASN1 ... pode haver um ou mais arquivos
-ASN1SRC:=Ativo.asn1 
+ASN1SRC:=Proto.asn1 
 
 #########################################################################
 ## NÃO MODIFIQUE AS LINHAS ABAIXO !!!
@@ -45,7 +45,7 @@ all: $(OBJS) $(TOBJS) $(MYOBJS)
 	gcc -g $(CFLAGS) -c $<
 
 $(MYOBJS): %.o: ../%.cc
-	g++ -c $(CFLAGS)  -c $<
+	g++ -std=c++11 -c $(CFLAGS)  -c $<
 
 .PHONY: clean
 .PHONY: cleanup
