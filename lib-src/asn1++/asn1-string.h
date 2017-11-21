@@ -17,7 +17,7 @@ class ASN1String {
   ASN1String(const string & astr);
   ASN1String(const ASN1String & other);
   ASN1String();
-  virtual ~ASN1String() {if (destroy) delete ptr;}
+  virtual ~ASN1String() {} //{if (destroy) delete ptr;}
 
   // Operadores de atribuição: uma forma conveniente de modificar a string
   virtual ASN1String & operator=(const char * s);
