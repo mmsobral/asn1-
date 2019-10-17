@@ -8,9 +8,12 @@ int main() {
   TAtivo pkt;
 
   // definindo os valores de varios campos 
-  pkt.set_nome("PETR3");
-  pkt.set_codigo(111);
+  TAtivo::Choice_id & id = pkt.get_id();
+  id.set_nome("PETR3");
+ 
+  //pkt.set_codigo(111);
   pkt.set_valor(1298);
+  //pkt.set_nome( "PETR3");
   pkt.set_data("30092015");
   pkt.set_horario("135812");
 
