@@ -4,7 +4,8 @@ all:
 %:
 	make -C build $@
 
-build: Makefile.build
+build: 
+	@rm -rf build
 	@if [ ! -d build ]; then mkdir -p build; cp Makefile.build build/Makefile; touch build/Makefile.objs; fi
 	@make -C build asn1
 	@echo ""
@@ -13,4 +14,6 @@ build: Makefile.build
 	@echo Para realizar a compilação do seu programa, execute \"make all\"
 	@echo ""
 
+clean:
+	@rm -rf build
 
