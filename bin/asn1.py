@@ -387,7 +387,7 @@ class Struct(Type):
     return r
 
   def get_var_decl(self, name, sep=''):
-    print 'var_decl:', self.typename
+    print ('var_decl:', self.typename)
     r = '%s  %s * m_%s;\n' % (sep, self.typename, name)
     return r
 
@@ -731,7 +731,7 @@ class Choice(Composable):
     r = ''
     try:    
       r = Composable.gen_code(self, embed, sep)
-    except Exception, e:
+    except Exception as e:
       #print '...', e
       #traceback.print_exc()
       return r
@@ -820,15 +820,15 @@ class Module:
 
   def get_members(self):
     # reordena os tipos de acordo com suas dependencias ...
-    orig = self.members.values()
+    orig = list(self.members.values())
     tipos = []
     members = []
     while orig:
       for field in orig:
         ok = True
-        print '>>', field
+        print ('>>', field)
         for m in field.dependencies():
-          print '--', field.name, m
+          print ('--', field.name, m)
           if not m in tipos:
             ok = False
             break

@@ -15,7 +15,7 @@ MYOBJS=demo.o
 PROG=demo
 
 # Substitua aqui o nome do seu arquivo com a especificação ASN1 ... pode haver um ou mais arquivos
-ASN1SRC:=Ativo.asn1 
+ASN1SRC:=msg.asn1 
 
 #########################################################################
 ## NÃO MODIFIQUE AS LINHAS ABAIXO !!!

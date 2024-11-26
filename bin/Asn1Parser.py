@@ -360,14 +360,14 @@ class ASN1Parser:
                | ID sequence extra
                | ID set
                | ID set extra'''
-    print 'anon. sequence:', p[1]
+    print ('anon. sequence:', p[1])
     p[2].set_name(p[1])
     p[0] = {p[1]:p[2]}
 
   def p_member_decl3(self, p):
     r'''member : ID enumerated
                | ID enumerated extra'''
-    print 'anon. enumerated:', p[1]
+    print ('anon. enumerated:', p[1])
     p[0] = Enumerated(p[1])
 
   def p_extra_decl1(self, p):
